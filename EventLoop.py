@@ -39,13 +39,16 @@ class EventLoop(object):
 			newstate = newhandle.state
 
 			if newstate == Handle.STATE.ADD :
+				print "add a handle!"
 				self.poller_.addEventFd(newevents)
 				newhandle.state = Handle.STATE.LOOP
 				self.handles_[newkey] = newhandle
 			elif newstate == Handle.STATE.DEL :
+				print "del a handle!"
 				self.poller_.delEventFd(newevents)
 				self.handles_.pop(newhandle.getEventFd())
 			elif newstate == Handle.STATE.MOD :
+				print "mod a hanlde!"
 				self.poller_.modEventFd(newevents)
 				newhandle.state = Handle.STATE.LOOP
 				self.handles_[newkey] = newhandle
@@ -53,6 +56,8 @@ class EventLoop(object):
 				assert False
 		
 		self.newHandles_.clear()
+
+
 
 	def loop(self) :
 		quit = True

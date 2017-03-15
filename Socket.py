@@ -1,4 +1,5 @@
-from socket import socket
+import socket
+import errno 
 from socket import AF_INET
 from socket import AF_INET6
 from socket import SOCK_DGRAM
@@ -8,7 +9,7 @@ socketDefaultFamily = AF_INET
 socketDefaultType = SOCK_STREAM
 
 class Socket(object) : 
-	def __init__(self, sock = socket(AF_INET, SOCK_STREAM, 0)) :
+	def __init__(self, sock = socket.socket(AF_INET, SOCK_STREAM, 0)) :
 		self.socket_ = sock
 		#FIXME : closeExec
 		self.socket_.setblocking(False)
@@ -17,7 +18,7 @@ class Socket(object) :
 		self.socket_.bind(address)
 
 	def recv(self, length) :
-		self.socket_.recv(length)
+		return self.socket_.recv(length)
 
 	def accept(self) : 
 		client = self.socket_.accept()
@@ -28,10 +29,10 @@ class Socket(object) :
 		self.socket_.listen(backlog)
 
 	def getAddr(self) :
-		self.socket_.getsockname()
+		return self.socket_.getsockname()
 
 	def getPeerAddr(self) :
-	   self.socket_.getpeername()
+	    return self.socket_.getpeername()
 
 	def getSocketFd(self) :
 		return self.socket_.fileno()
