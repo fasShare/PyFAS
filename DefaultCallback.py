@@ -1,4 +1,5 @@
 
-def defMessageCallback(recvbuffer) :
+def defMessageCallback(tcpConn, recvbuffer) :
 	#FIXME : read message!
-	print recvbuffer 
+	print recvbuffer
+	tcpConn.sendMsg(recvbuffer) 

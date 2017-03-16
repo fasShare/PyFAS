@@ -12,4 +12,10 @@ class Events(object) :
 		self.fd_ = fd
 		self.eventMask_ = eventMask
 
+	def addEventMask(self, eventMask) :
+		self.eventMask_ = self.eventMask_ | eventMask
+
+	def delEventMask(self, eventMask) :
+		self.eventMask_ = self.eventMask_ & (~eventMask)
+		
 

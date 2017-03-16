@@ -40,8 +40,15 @@ class Handle(object):
 
 	def getEventFd(self) :
 		return self.events_.fd_
+
 	def getEventMask(self) : 
 		return self.events_.eventMask_
+
+	def addEventMask(self, eventMask) : 
+		self.events_.addEventMask(eventMask)
+
+	def delEventMask(self, eventMask) :
+		self.events_.delEventMask(eventMask)
 
 	def setReadCb(self, readcb) :
 		self.readcb_ = readcb
@@ -56,13 +63,13 @@ class Handle(object):
 		self.closecb_ = closecb
 
 	def handEvent(self, reventFd, reventMask) :
-		if (reventMask | EPOLLIN) or (reventMask | EPOLLPRI) or (reventMask | EPOLLHUP) :
+		if (reventMask & EPOLLIN) or (reventMask & EPOLLPRI) or (reventMask & EPOLLHUP) :
 			self.readcb_(reventFd, reventMask)
-		elif (reventMask | EPOLLOUT) :
+		elif (reventMask & EPOLLOUT) :
 			self.writecb_(reventFd, reventMask)
-		elif (reventMask | POLLERR) :
+		elif (reventMask & POLLERR) :
 			self.errorcb_(reventFd, reventMask)
-		elif (reventMask | EPOLLHUP) and (not(reventMask | EPOLLIN)) :
+		elif (reventMask & EPOLLHUP) and (not(reventMask & EPOLLIN)) :
 			self.closecb_(reventFd, reventMask)
 		else :
 			print "handle no event!"

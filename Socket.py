@@ -20,6 +20,9 @@ class Socket(object) :
 	def recv(self, length) :
 		return self.socket_.recv(length)
 
+	def send(self, buffer) :
+		return self.socket_.send(str(buffer))
+
 	def accept(self) : 
 		client = self.socket_.accept()
 		client[0].setblocking(False)
